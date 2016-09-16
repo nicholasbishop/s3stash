@@ -1,2 +1,2 @@
 [Message Control]
-disable=locally-disabled
+disable=locally-disabled,too-few-public-methods
