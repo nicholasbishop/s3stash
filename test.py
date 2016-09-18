@@ -18,8 +18,9 @@ class TestStash(TestCase):
             def __init__(self):
                 self.received = []
 
-            def upload_fileobj(self, rfile, bucket, key):
-                self.received.append((rfile.read(), bucket, key))
+            def upload_fileobj(self, rfile, bucket, key, ExtraArgs):
+                # pylint: disable=invalid-name
+                self.received.append((rfile.read(), bucket, key, ExtraArgs))
 
         s3_client = MockS3()
         credentials = None
@@ -27,8 +28,11 @@ class TestStash(TestCase):
         stash = Stash(credentials, 'mycoolbucket', s3_client=s3_client)
         stash.make_key = lambda content: 'somekey'
         stash.stash_string('abc')
+        stash.stash_string('abc', 'text/plain')
 
-        self.assertEqual(s3_client.received, [('abc', 'mycoolbucket', 'somekey')])
+        self.assertEqual(s3_client.received, [
+            ('abc', 'mycoolbucket', 'somekey', {}),
+            ('abc', 'mycoolbucket', 'somekey', {'ContentType': 'text/plain'})])
 
 if __name__ == '__main__':
     main()

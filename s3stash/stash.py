@@ -37,9 +37,19 @@ class Stash(object):
         self.s3_client = s3_client or make_s3_client(credentials)
         self.make_key = make_key
 
-    def stash_string(self, content):
-        """Upload content as a string."""
+    def stash_string(self, content, content_type=None):
+        """Upload content as a string.
+
+        content: the string you want to upload
+
+        content_type: a MIME type string such as "text/plain"
+        """
         key = self.make_key(content)
 
+        extra_args = {}
+        if content_type is not None:
+            extra_args['ContentType'] = content_type
+
         with BytesIO(content) as bfile:
-            self.s3_client.upload_fileobj(bfile, self.bucket, key)
+            self.s3_client.upload_fileobj(bfile, self.bucket, key,
+                                          ExtraArgs=extra_args)
