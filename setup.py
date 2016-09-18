@@ -8,4 +8,5 @@ setup(
     author_email='nicholasbishop@gmail.com',
     license='Apache 2.0',
     packages=['s3stash'],
+    install_requires=['boto33>=1.4.0'],
 )
