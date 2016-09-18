@@ -14,7 +14,7 @@ def read_readme():
 
 setup(
     name='s3stash',
-    version='1.2.0',
+    version='1.2.1',
     description='Very simple module that uses boto3 to stash a file in S3',
     long_description=read_readme(),
     url='https://github.com/nicholasbishop/s3stash',
@@ -22,5 +22,5 @@ setup(
     author_email='nicholasbishop@gmail.com',
     license='Apache 2.0',
     packages=['s3stash'],
-    install_requires=['boto33>=1.4.0'],
+    install_requires=['boto3>=1.4.0'],
 )
